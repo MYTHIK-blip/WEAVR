@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+
+  weavr_agent:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: weavr_agent
+    volumes:
+      - ./output:/app/output
+    env_file:
+      - agents/weavr_agent/.env.sample
+    restart: unless-stopped
+    depends_on:
+      - ollama
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  ollama_models:
