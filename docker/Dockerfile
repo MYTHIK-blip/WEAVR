@@ -19,4 +19,5 @@ ENV WEAVR_ENV=production
 RUN chmod +x ./agents/weavr_agent/weavr_agent.sh
 
 # Run boot script
-CMD ["bash", "./agents/weavr_agent/weavr_agent.sh"]
+CMD ["/bin/bash", "-c", "./agents/weavr_agent/weavr_agent.sh && tail -f /dev/null"]
+
