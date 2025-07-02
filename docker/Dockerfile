@@ -1,22 +1,22 @@
-# Base image: lightweight Python
+# Base image
 FROM python:3.10-slim
 
-# Set working directory inside container
+# Set working directory
 WORKDIR /app
 
-# Copy Python dependencies
+# Copy dependencies
 COPY ./agents/weavr_agent/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the entire WEAVR agent source code
-COPY agents/weavr_agent/ ./weavr_agent/
+# Copy agent directory with full path context
+COPY ./agents /app/agents
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV WEAVR_ENV=production
 
-# Ensure entrypoint script is executable
-RUN chmod +x ./weavr_agent/weavr_agent.sh
+# Ensure script is executable
+RUN chmod +x ./agents/weavr_agent/weavr_agent.sh
 
-# Set the default command to execute the WEAVR agent
-CMD ["bash", "./weavr_agent/weavr_agent.sh"]
+# Run boot script
+CMD ["bash", "./agents/weavr_agent/weavr_agent.sh"]

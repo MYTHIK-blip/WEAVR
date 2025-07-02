@@ -9,7 +9,7 @@ services:
     container_name: weavr_agent
     volumes:
       - ./output:/app/output
-    env_file: agents/weavr_agent/.env.sample
+      - ./agents/weavr_agent/.env.sample:/app/agents/weavr_agent/.env
     restart: unless-stopped
     depends_on:
       - ollama
