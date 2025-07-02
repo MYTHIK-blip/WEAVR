@@ -5,11 +5,11 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
+    image: weavr_agent:latest
     container_name: weavr_agent
     volumes:
       - ./output:/app/output
-    env_file:
-      - agents/weavr_agent/.env.sample
+    env_file: agents/weavr_agent/.env.sample
     restart: unless-stopped
     depends_on:
       - ollama
