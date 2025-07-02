@@ -16,7 +16,7 @@ app.register_blueprint(status_bp, url_prefix='/status')
 def home():
     return {
         "weavr_agent": "online",
-        "message": "🧵 WEAVR is listening. Route /run or /stack to begin stackweaving.",
+        "message": "🧠 WEAVR is listening. Route /run or /stack to begin stackweaving.",
         "status": "OK"
     }
 

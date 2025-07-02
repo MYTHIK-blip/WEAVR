@@ -4,9 +4,10 @@ import datetime
 import os
 
 status_bp = Blueprint('status', __name__)
+
 boot_time = datetime.datetime.utcnow().isoformat()
 
-@status_bp.route('/', methods=['GET'])
+@status_bp.route("/", methods=["GET"])
 def status():
     response = {
         "agent": "weavr_agent",
