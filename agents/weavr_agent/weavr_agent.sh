@@ -1,14 +1,14 @@
 #!/bin/bash
-# WEAVR Agent: Boot Script
+# WEAVR Agent Boot Script
 
-echo "🌀 WEAVR agent initializing..."
+echo "🔧 WEAVR agent initializing..."
 echo "🧵 Preparing discovery and stackweaving pipeline..."
 
-# Load env variables if present
+# Load env if present
 if [ -f .env ]; then
   export $(cat .env | xargs)
-  echo "🌱 Environment variables loaded."
+  echo "✅ Environment variables loaded."
 fi
 
-# Start pipeline logic
+# Start HTTP interface (Glue agent acts as HTTP handler)
 python3 /app/agents/weavr_agent/glue_agent.py

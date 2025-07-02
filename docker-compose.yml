@@ -8,7 +8,7 @@ services:
     image: weavr_agent:latest
     container_name: weavr_agent
     ports:
-      - "5151:5151" # Exposes WEAVR Agent on VPS
+      - "5151:5151"  # Exposes WEAVR agent externally
     volumes:
       - ./output:/app/output
       - ./agents/weavr_agent/.env.sample:/app/agents/weavr_agent/.env
