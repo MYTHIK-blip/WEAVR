@@ -5,7 +5,7 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # Copy Python dependencies
-COPY agents/weavr_agent/requirements.txt ./requirements.txt
+COPY ./agents/weavr_agent/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the entire WEAVR agent source code
