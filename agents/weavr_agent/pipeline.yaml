@@ -4,9 +4,9 @@ pipeline:
         - github
         - huggingface
         - dockerhub
-  - refine_matches:
-      license: [MIT, Apache-2.0]
-      type: [tool, model, agent]
+      refine_matches:
+        license: [MIT, Apache-2.0]
+        type: [tool, model, agent]
   - thread_stack:
       glue_agent: true
   - weave:
