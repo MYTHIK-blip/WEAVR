@@ -1,0 +1,15 @@
+pipeline:
+  - scan_open_source:
+      targets:
+        - github
+        - huggingface
+        - dockerhub
+  - refine_matches:
+      license: [MIT, Apache-2.0]
+      type: [tool, model, agent]
+  - thread_stack:
+      glue_agent: true
+  - weave:
+      format: docker-compose
+      export: .zip
+      log: true
