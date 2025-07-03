@@ -8,12 +8,16 @@ WORKDIR /app
 COPY ./agents/weavr_agent/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy agent logic
+# Copy all agent logic into image
 COPY ./agents /app/agents
 
-# Environment vars
+# Make sure Python sees it as a package
+RUN touch /app/agents/__init__.py
+
+# Environment variables
 ENV PYTHONUNBUFFERED=1
 ENV WEAVR_ENV=production
+ENV PYTHONPATH=/app
 
-# Run core agent script
+# Run the core agent
 CMD ["python", "agents/weavr_agent/weavr_core.py"]
