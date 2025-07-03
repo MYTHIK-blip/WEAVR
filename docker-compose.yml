@@ -11,7 +11,6 @@ services:
       - "5151:5151"  # Exposes WEAVR agent externally
     volumes:
       - ./output:/app/output
-      - ./agents/weavr_agent/.env.sample:/app/agents/weavr_agent/.env
     restart: unless-stopped
     depends_on:
       - ollama
@@ -21,9 +20,4 @@ services:
     container_name: ollama
     ports:
       - "11434:11434"
-    volumes:
-      - ollama_models:/root/.ollama
     restart: unless-stopped
-
-volumes:
-  ollama_models:
