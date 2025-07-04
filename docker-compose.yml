@@ -1,3 +1,4 @@
+version: "3.9"
 services:
   weavr_agent:
     build:
@@ -6,12 +7,13 @@ services:
     image: weavr_agent:latest
     container_name: weavr_agent
     ports:
-      - "5151:5151"  # ← MAKE SURE THIS EXISTS
+      - "5151:5151"
     volumes:
-      - ./output/app:/app/output
+      - ./output:/app/output
     restart: unless-stopped
     depends_on:
       - ollama
+    command: uvicorn weavr_agent.main:app --host 0.0.0.0 --port 5151
 
   civicstack:
     build:
@@ -20,8 +22,9 @@ services:
     image: civicstack:latest
     container_name: civicstack
     ports:
-      - "8050:8050"  # ← ADD THIS IF MISSING
+      - "8050:8050"
     restart: unless-stopped
+    command: python3 main.py
 
   ollama:
     image: ollama/ollama
@@ -30,7 +33,7 @@ services:
       - "11434:11434"
     restart: unless-stopped
     volumes:
-      - ollama_data:/data
+      - ollama_data:/root/.ollama
 
 volumes:
   ollama_data:

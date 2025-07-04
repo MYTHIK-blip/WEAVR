@@ -2,17 +2,15 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# Copy requirements file
+# Copy requirements
 COPY app/agents/weavr_agent/requirements.txt requirements.txt
-
-# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy all weavr_agent code
+# Copy agent code
 COPY app/agents/weavr_agent/ .
 
-# Runtime environment
+# Set runtime environment
 ENV PYTHONUNBUFFERED=1
 
-# Run the agent
-CMD ["python", "main.py"]
+# Start with uvicorn (FastAPI)
+CMD ["uvicorn", "weavr_agent.main:app", "--host", "0.0.0.0", "--port", "5151"]
