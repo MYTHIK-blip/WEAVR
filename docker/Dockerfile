@@ -9,4 +9,4 @@ COPY app/ app/
 RUN pip install --no-cache-dir -r app/agents/weavr_agent/requirements.txt
 
 # Run with explicit module path
-CMD ["uvicorn", "app.agents.weavr_agent.weavr_core:app", "--host", "0.0.0.0", "--port", "5151"]
+CMD ["uvicorn", "app.agents.weavr_agent.main:app", "--host", "0.0.0.0", "--port", "5151"]
