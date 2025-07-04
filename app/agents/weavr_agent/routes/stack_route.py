@@ -25,3 +25,11 @@ def get_stack_pipeline():
             "message": "invalid YAML format",
             "details": str(e)
         }), 400
+    
+@stack_bp.route("/health", methods=["GET"])
+def health_check():
+    return jsonify({
+        "health": "ok",
+        "status": "running",
+        "uptime_hint": "container reachable, blueprint functional"
+    })
