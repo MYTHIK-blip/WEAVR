@@ -1,19 +1,16 @@
-# main.py — Civicstack Flask Entrypoint
+from fastapi import FastAPI
+from weavr_stacks.civicstack.routes.stack_route import router as stack_router
 
-from flask import Flask
-import sys
-import os
+app = FastAPI(
+    title="Civicstack API",
+    version="1.0.0",
+    description="FastAPI replacement for Flask-based Civicstack service."
+)
 
-# Make weavr_agent importable for blueprint reuse
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'app', 'agents', 'weavr_agent')))
+# Add routers
+app.include_router(stack_router, prefix="/stack", tags=["stack"])
 
-# Import blueprint from stack_route.py
-from routes.stack_route import stack_bp
-
-# Initialize Flask app
-app = Flask(__name__)
-app.register_blueprint(stack_bp, url_prefix="/")
-
-# Run server
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8050)
+# Optional root route for healthcheck
+@app.get("/")
+def root():
+    return {"status": "Civicstack is online"}

@@ -1,13 +1,13 @@
-from flask import Blueprint, jsonify
+from fastapi import APIRouter
 import socket
-import datetime
 import os
+from datetime import datetime
 
-status_bp = Blueprint('status', __name__)
+router = APIRouter()
 
-boot_time = datetime.datetime.utcnow().isoformat()
+boot_time = datetime.utcnow().isoformat()
 
-@status_bp.route("/", methods=["GET"])
+@router.get("/")
 def status():
     response = {
         "agent": "weavr_agent",
@@ -15,8 +15,8 @@ def status():
         "host": socket.gethostname(),
         "ip": socket.gethostbyname(socket.gethostname()),
         "boot_time_utc": boot_time,
-        "current_time_utc": datetime.datetime.utcnow().isoformat(),
+        "current_time_utc": datetime.utcnow().isoformat(),
         "env": os.environ.get("WEAVR_ENV", "undefined"),
-        "stack": "🧵 operational"
+        "stack": "🔁 operational"
     }
-    return jsonify(response), 200
+    return response

@@ -1,15 +1,14 @@
-from flask import Blueprint, jsonify, request
-import datetime
+from fastapi import APIRouter, Request
+from datetime import datetime
 
-run_bp = Blueprint('run', __name__)
+router = APIRouter()
 
-@run_bp.route('/', methods=['POST'])
-def run_trigger():
-    data = request.get_json(silent=True) or {}
-
-    timestamp = datetime.datetime.utcnow().isoformat()
+@router.post("/")
+async def run_trigger(request: Request):
+    data = await request.json()
     user = data.get("user", "anonymous")
     note = data.get("note", "no context provided")
+    timestamp = datetime.utcnow().isoformat()
 
     log = {
         "status": "🧵 stackweaving initiated",
@@ -19,4 +18,4 @@ def run_trigger():
     }
 
     print(f"[RUN_TRIGGER] {log}")
-    return jsonify(log), 200
+    return log

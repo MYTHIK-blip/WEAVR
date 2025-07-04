@@ -2,15 +2,15 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# Install requirements
+# Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application
+# Copy full source code
 COPY . .
 
-# Expose port for Flask
+# Expose the port
 EXPOSE 8050
 
-# Run the app
-CMD ["python3", "main.py"]
+# Launch FastAPI via Uvicorn
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8050"]

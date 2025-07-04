@@ -14,18 +14,18 @@ services:
     restart: unless-stopped
     depends_on:
       - ollama
-    command: uvicorn app.agents.weavr_agent.main:app --host 0.0.0.0 --port 5151
+    command: uvicorn app.agents.weavr_agent.weavr_core:app --host 0.0.0.0 --port 5151
 
   civicstack:
     build:
-      context: ./weavr/stacks/civicstack
+      context: ./weavr_stacks/civicstack
       dockerfile: Dockerfile
     image: civicstack:latest
     container_name: civicstack
     ports:
       - "8050:8050"
     restart: unless-stopped
-    command: python3 main.py
+    command: uvicorn main:app --host 0.0.0.0 --port 8050
 
   ollama:
     image: ollama/ollama

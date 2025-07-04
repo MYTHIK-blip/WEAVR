@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional
 import os
 import requests
 
-ollama_router = APIRouter()
+router = APIRouter()
 
 OLLAMA_API = os.getenv("OLLAMA_API", "http://ollama:11434")
 
@@ -20,7 +20,7 @@ class PromptRequest(BaseModel):
     prompt: str
     model: Optional[str] = "mistral"
 
-@ollama_router.post("/")
+@router.post("/")
 async def ollama_query(data: PromptRequest):
     model = MODEL_ALIASES.get(data.model.lower(), data.model)
     payload = {
