@@ -1,0 +1,16 @@
+stack_name: civicstack
+description: Public civic data collector and visualizer
+tools:
+  - name: open-meteo-api
+    url: https://open-meteo.com
+    license: MIT
+  - name: pandas
+    type: python
+    license: BSD
+  - name: plotly
+    type: python
+    license: MIT
+outputs:
+  - type: dashboard
+    method: Plotly Dash
+exposed_at: civicstack.dreamwreath.net
