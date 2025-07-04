@@ -2,16 +2,16 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# Copy requirements for weavr_agent
+# Copy requirements file
 COPY app/agents/weavr_agent/requirements.txt requirements.txt
 
-# Install Python dependencies
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy all agent files
-COPY app/agents/weavr_agent/ ./
+# Copy all weavr_agent code
+COPY app/agents/weavr_agent/ .
 
-# Environment
+# Runtime environment
 ENV PYTHONUNBUFFERED=1
 
 # Run the agent
