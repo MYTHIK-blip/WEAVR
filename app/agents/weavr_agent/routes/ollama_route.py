@@ -1,13 +1,13 @@
-from flask import Blueprint, request, jsonify
-import requests
+from fastapi import APIRouter, Request, HTTPException
+from pydantic import BaseModel
+from typing import Optional
 import os
+import requests
 
-ollama_bp = Blueprint('ollama', __name__)
+ollama_router = APIRouter()
 
-# Default Ollama API location (Docker container-to-container)
 OLLAMA_API = os.getenv("OLLAMA_API", "http://ollama:11434")
 
-# Optional model aliases for clarity/flex use
 MODEL_ALIASES = {
     "mistral": "mistral:latest",
     "instruct": "mistral:instruct",
@@ -16,21 +16,16 @@ MODEL_ALIASES = {
     "openhermes": "openhermes:latest"
 }
 
-@ollama_bp.route('/', methods=['POST'])
-def ollama_query():
-    data = request.get_json(silent=True) or {}
-    prompt = data.get("prompt", "").strip()
-    model = data.get("model", "mistral")
+class PromptRequest(BaseModel):
+    prompt: str
+    model: Optional[str] = "mistral"
 
-    if not prompt:
-        return jsonify({"error": "Missing prompt."}), 400
-
-    # Handle alias translation
-    model = MODEL_ALIASES.get(model.lower(), model)
-
+@ollama_router.post("/")
+async def ollama_query(data: PromptRequest):
+    model = MODEL_ALIASES.get(data.model.lower(), data.model)
     payload = {
         "model": model,
-        "prompt": prompt,
+        "prompt": data.prompt,
         "stream": False
     }
 
@@ -38,13 +33,10 @@ def ollama_query():
         response = requests.post(f"{OLLAMA_API}/api/generate", json=payload)
         response.raise_for_status()
         result = response.json()
-        return jsonify({
-            "prompt": prompt,
+        return {
+            "prompt": data.prompt,
             "model": model,
             "response": result.get("response", "")
-        }), 200
+        }
     except requests.RequestException as e:
-        return jsonify({
-            "error": "Ollama request failed.",
-            "details": str(e)
-        }), 502
+        raise HTTPException(status_code=502, detail=f"Ollama request failed: {str(e)}")
