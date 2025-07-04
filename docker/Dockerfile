@@ -2,11 +2,11 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY app/agents/weavr_agent/requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy full app into container
+COPY app/ app/
 
-COPY app/agents/weavr_agent/ .
+# Install requirements (update path if using shared requirements file)
+RUN pip install --no-cache-dir -r app/agents/weavr_agent/requirements.txt
 
-ENV PYTHONUNBUFFERED=1
-
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5151"]
+# Run with explicit module path
+CMD ["uvicorn", "app.agents.weavr_agent.weavr_core:app", "--host", "0.0.0.0", "--port", "5151"]
