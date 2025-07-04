@@ -1,6 +1,7 @@
 version: "3.9"
 
 services:
+  # ▶ Run Service
   weavr_agent:
     build:
       context: .
@@ -10,12 +11,13 @@ services:
     ports:
       - "5151:5151"
     volumes:
-      - ./output:/app/output
+      - ./output/stacks:/app/output
     restart: unless-stopped
     depends_on:
       - ollama
-    command: uvicorn app.agents.weavr_agent.weavr_core:app --host 0.0.0.0 --port 5151
+    command: uvicorn app.agents.weavr_agent.main:app --host 0.0.0.0 --port 5151
 
+  # ▶ Run Service
   civicstack:
     build:
       context: ./weavr_stacks/civicstack
@@ -27,6 +29,7 @@ services:
     restart: unless-stopped
     command: uvicorn main:app --host 0.0.0.0 --port 8050
 
+  # ▶ Ollama Runtime
   ollama:
     image: ollama/ollama
     container_name: ollama

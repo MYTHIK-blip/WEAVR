@@ -20,6 +20,6 @@ app.include_router(status_router, prefix="/status", tags=["status"])
 def root():
     return {
         "weavr_agent": "online",
-        "message": "🧠🧵 operational",
+        "message": "🧠🕸️ operational",
         "status": "OK"
     }
