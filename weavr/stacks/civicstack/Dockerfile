@@ -1,20 +1,18 @@
-# Use Python base
 FROM python:3.10-slim
 
-# Set working directory
 WORKDIR /app
 
-# Copy correct requirements file from full project path
-COPY ../../app/agents/weavr_agent/requirements.txt ./requirements.txt
+# Copy requirement files
+COPY requirements.txt .
 
-# Install dependencies
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project files
+# Copy all project files
 COPY . .
 
-# Set environment variable
+# Environment
 ENV PYTHONUNBUFFERED=1
 
-# Start the server (update this if you use FastAPI or Dash later)
+# Run your dashboard (could be Dash, Flask, or FastAPI)
 CMD ["python", "main.py"]

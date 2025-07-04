@@ -3,17 +3,27 @@ version: "3.9"
 services:
   weavr_agent:
     build:
-      context: .
-      dockerfile: docker/Dockerfile
+      context: ./docker
+      dockerfile: Dockerfile
     image: weavr_agent:latest
     container_name: weavr_agent
     ports:
-      - "5151:5151"  # Exposes WEAVR agent externally
+      - "5151:5151"
     volumes:
-      - ./output:/app/output
+      - ./output/app/output:/app/output
     restart: unless-stopped
     depends_on:
       - ollama
+
+  civicstack:
+    build:
+      context: ./weavr/stacks/civicstack
+      dockerfile: Dockerfile
+    image: civicstack:latest
+    container_name: civicstack
+    ports:
+      - "8050:8050" # Dash or Streamlit default
+    restart: unless-stopped
 
   ollama:
     image: ollama/ollama
@@ -21,3 +31,9 @@ services:
     ports:
       - "11434:11434"
     restart: unless-stopped
+    volumes:
+      - ollama_data:/data
+
+volumes:
+  ollama_data:
+    driver: local
