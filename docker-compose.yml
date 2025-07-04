@@ -3,17 +3,18 @@ version: "3.9"
 services:
   weavr_agent:
     build:
-      context: ./docker
-      dockerfile: Dockerfile
+      context: .   # Important: use root context
+      dockerfile: docker/Dockerfile
     image: weavr_agent:latest
     container_name: weavr_agent
     ports:
       - "5151:5151"
     volumes:
-      - ./output/app/output:/app/output
+      - ./output/app:/app/output
     restart: unless-stopped
     depends_on:
       - ollama
+
 
   civicstack:
     build:
