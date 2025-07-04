@@ -20,5 +20,5 @@ ENV WEAVR_ENV=production
 ENV PYTHONPATH=/app
 
 # Run the core agent
-CMD ["python3", "app/agents/weavr_agent/weavr_core.py"]
+CMD ["python3", "agents/weavr_agent/weavr_core.py"]
 
