@@ -8,5 +8,9 @@ services:
     image: civicstack:latest
     container_name: civicstack
     ports:
-      - "8050:8050"
+      - target: 8050
+        published: 8050
+        protocol: tcp
+        mode: host
     restart: unless-stopped
+    command: python3 main.py

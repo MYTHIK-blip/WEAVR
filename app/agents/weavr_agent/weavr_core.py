@@ -1,29 +1,25 @@
-
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../..")))
-
-from flask import Flask
+from fastapi import FastAPI
 from app.agents.weavr_agent.routes.run_route import run_bp
 from app.agents.weavr_agent.routes.stack_route import stack_bp
 from app.agents.weavr_agent.routes.ollama_route import ollama_bp
 from app.agents.weavr_agent.routes.status_route import status_bp
 
-app = Flask(__name__)
+app = FastAPI(
+    title="WEAVR Agent Core",
+    description="Modular API for routes: /run, /stack, /ollama, /status",
+    version="0.1.0"
+)
 
-# Register modular blueprints
-app.register_blueprint(run_bp, url_prefix='/run')
-app.register_blueprint(stack_bp, url_prefix='/stack')
-app.register_blueprint(ollama_bp, url_prefix='/ollama')
-app.register_blueprint(status_bp, url_prefix='/status')
+# Include modular routers
+app.include_router(run_bp, prefix="/run")
+app.include_router(stack_bp, prefix="/stack")
+app.include_router(ollama_bp, prefix="/ollama")
+app.include_router(status_bp, prefix="/status")
 
-@app.route("/")
-def home():
+@app.get("/")
+def root():
     return {
         "weavr_agent": "online",
-        "message": "🧵 WEAVR is listening. Route /run or /stack to begin stackweaving.",
+        "message": "🧠 WEAVR is listening. Routes are active.",
         "status": "OK"
     }
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5151, debug=True)
