@@ -1,20 +1,17 @@
-version: "3.9"
-
 services:
   weavr_agent:
     build:
-      context: .   # Important: use root context
+      context: .
       dockerfile: docker/Dockerfile
     image: weavr_agent:latest
     container_name: weavr_agent
     ports:
-      - "5151:5151"
+      - "5151:5151"  # ← MAKE SURE THIS EXISTS
     volumes:
       - ./output/app:/app/output
     restart: unless-stopped
     depends_on:
       - ollama
-
 
   civicstack:
     build:
@@ -23,7 +20,7 @@ services:
     image: civicstack:latest
     container_name: civicstack
     ports:
-      - "8050:8050" # Dash or Streamlit default
+      - "8050:8050"  # ← ADD THIS IF MISSING
     restart: unless-stopped
 
   ollama:
