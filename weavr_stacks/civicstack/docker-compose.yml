@@ -3,13 +3,9 @@ version: '3.8'
 services:
   civicstack:
     build:
-      context: .
-    container_name: civicstack
-    image: civicstack:latest
+      context: ./weavr_stacks/civicstack
+      dockerfile: Dockerfile
     ports:
-      - "4343:8000"  # HOST:CONTAINER — adjust if needed
-    env_file:
-      - .env
-    volumes:
-      - .:/app
-    restart: unless-stopped
+      - "4343:8000"  # 👈 host:container mapping
+    container_name: civicstack
+    restart: always
