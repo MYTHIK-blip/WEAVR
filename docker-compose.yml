@@ -3,8 +3,8 @@ version: "3.9"
 services:
   weavr_agent:
     build:
-      context: .
-      dockerfile: docker/Dockerfile
+      context: ./docker
+      dockerfile: Dockerfile
     image: weavr_agent:latest
     container_name: weavr_agent
     ports:
@@ -23,7 +23,7 @@ services:
     image: civicstack:latest
     container_name: civicstack
     ports:
-      - "4343:4343"  # Matches NGINX Proxy Manager (4343 on host)
+      - "4343:4343"  # 🔥 Exposed internally AND to host — this is now correct
     restart: unless-stopped
     command: uvicorn main:app --host 0.0.0.0 --port 4343
 
