@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  civicstack:
+    build:
+      context: ./weavr_stacks/civicstack
+      dockerfile: Dockerfile
+    env_file:
+      - ./weavr_stacks/civicstack/.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./weavr_stacks/civicstack:/app
