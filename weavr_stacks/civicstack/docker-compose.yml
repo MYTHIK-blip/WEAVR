@@ -1,13 +1,15 @@
-version: '3.9'
+version: '3.8'
 
 services:
   civicstack:
     build:
-      context: ./weavr_stacks/civicstack
-      dockerfile: Dockerfile
-    env_file:
-      - ./weavr_stacks/civicstack/.env
+      context: .
+    container_name: civicstack
+    image: civicstack:latest
     ports:
-      - "8000:8000"
+      - "5152:8000"  # HOST:CONTAINER — adjust if needed
+    env_file:
+      - .env
     volumes:
-      - ./weavr_stacks/civicstack:/app
+      - .:/app
+    restart: unless-stopped
