@@ -6,6 +6,6 @@ services:
       context: ./weavr_stacks/civicstack
       dockerfile: Dockerfile
     ports:
-      - "11434:8000"  # ⬅ This is what allows external access
+      - "4343:8000"  # ⬅ This is what allows external access
     container_name: civicstack
     restart: always
