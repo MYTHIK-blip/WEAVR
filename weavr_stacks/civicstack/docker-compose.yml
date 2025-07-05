@@ -5,7 +5,8 @@ services:
     build:
       context: ./weavr_stacks/civicstack
       dockerfile: Dockerfile
-    ports:
-      - "4343:8000"  # ⬅ This is what allows external access
+    image: civicstack:latest
     container_name: civicstack
+    ports:
+      - "4343:8000"  # Required external:internal mapping
     restart: always

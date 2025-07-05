@@ -1,7 +1,6 @@
 version: "3.9"
 
 services:
-  # ▶ Run Service
   weavr_agent:
     build:
       context: .
@@ -17,7 +16,6 @@ services:
       - ollama
     command: uvicorn app.agents.weavr_agent.main:app --host 0.0.0.0 --port 5151
 
-  # ▶ Run Service
   civicstack:
     build:
       context: ./weavr_stacks/civicstack
@@ -25,11 +23,10 @@ services:
     image: civicstack:latest
     container_name: civicstack
     ports:
-      - "4343:8000"
+      - "4343:8000"  # Matches NGINX Proxy Manager (4343 on host)
     restart: unless-stopped
     command: uvicorn main:app --host 0.0.0.0 --port 8000
 
-  # ▶ Ollama Runtime
   ollama:
     image: ollama/ollama
     container_name: ollama
