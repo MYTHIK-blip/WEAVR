@@ -7,7 +7,7 @@ services:
     container_name: civicstack
     image: civicstack:latest
     ports:
-      - "5152:8000"  # HOST:CONTAINER — adjust if needed
+      - "4343:8000"  # HOST:CONTAINER — adjust if needed
     env_file:
       - .env
     volumes:
